@@ -57,7 +57,8 @@ bool HVACTutorialController::run()
                        Eigen::Vector3d(0.4 + 0.2 * std::cos(t), 0.2 + 0.2 * std::sin(t), 0.8)));
 
   // Update the target position of the CoM
-  comTask->com(Eigen::Vector3d(0.0, static_cast<double>(comFlag) * 0.1, 0.8));
+  Eigen::Vector3d footCenter = 0.5 * (footTasks[0]->target().translation() + footTasks[1]->target().translation());
+  comTask->com(footCenter + Eigen::Vector3d(0.0, static_cast<double>(comFlag) * 0.1, 0.8));
 
   return mc_control::MCController::run();
 }
