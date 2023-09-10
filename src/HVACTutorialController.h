@@ -1,6 +1,7 @@
 #pragma once
 
 #include <mc_control/mc_controller.h>
+#include <mc_tasks/TransformTask.h>
 
 
 #include "api.h"
@@ -16,4 +17,7 @@ struct HVACTutorialController_DLLAPI HVACTutorialController : public mc_control:
 protected:
   //! Current time [sec]
   double t = 0.0;
+
+  //! Hand task
+  std::shared_ptr<mc_tasks::TransformTask> handTask;
 };
