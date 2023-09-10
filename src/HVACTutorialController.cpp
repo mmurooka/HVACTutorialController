@@ -6,10 +6,16 @@ HVACTutorialController::HVACTutorialController(mc_rbdyn::RobotModulePtr rm, doub
   // Construct hand task
   handTask = std::make_shared<mc_tasks::TransformTask>("LeftGripper", robots(), 0, 100.0, 500.0);
 
+  // Construct foot tasks
+  footTasks[0] = std::make_shared<mc_tasks::TransformTask>("LeftFoot", robots(), 0, 1000.0, 500.0);
+  footTasks[1] = std::make_shared<mc_tasks::TransformTask>("RightFoot", robots(), 0, 1000.0, 500.0);
+
   solver().addConstraintSet(contactConstraint);
   solver().addConstraintSet(kinematicsConstraint);
   solver().addTask(postureTask);
   solver().addTask(handTask);
+  solver().addTask(footTasks[0]);
+  solver().addTask(footTasks[1]);
   solver().setContacts({{}});
 
   mc_rtc::log::success("HVACTutorialController init done ");

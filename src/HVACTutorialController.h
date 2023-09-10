@@ -20,4 +20,7 @@ protected:
 
   //! Hand task
   std::shared_ptr<mc_tasks::TransformTask> handTask;
+
+  //! Foot tasks
+  std::array<std::shared_ptr<mc_tasks::TransformTask>, 2> footTasks;
 };
