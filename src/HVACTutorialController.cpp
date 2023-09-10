@@ -10,12 +10,17 @@ HVACTutorialController::HVACTutorialController(mc_rbdyn::RobotModulePtr rm, doub
   footTasks[0] = std::make_shared<mc_tasks::TransformTask>("LeftFoot", robots(), 0, 1000.0, 500.0);
   footTasks[1] = std::make_shared<mc_tasks::TransformTask>("RightFoot", robots(), 0, 1000.0, 500.0);
 
+  // Construct CoM task
+  comTask = std::make_shared<mc_tasks::CoMTask>(robots(), 0, 1000.0, 500.0);
+  comTask->dimWeight(Eigen::Vector3d(1.0, 1.0, 0.1));
+
   solver().addConstraintSet(contactConstraint);
   solver().addConstraintSet(kinematicsConstraint);
   solver().addTask(postureTask);
   solver().addTask(handTask);
   solver().addTask(footTasks[0]);
   solver().addTask(footTasks[1]);
+  solver().addTask(comTask);
   solver().setContacts({{}});
 
   mc_rtc::log::success("HVACTutorialController init done ");
@@ -33,6 +38,9 @@ bool HVACTutorialController::run()
   handTask->target(
       sva::PTransformd(sva::RotX(mc_rtc::constants::PI),
                        Eigen::Vector3d(0.4 + 0.2 * std::cos(t), 0.2 + 0.2 * std::sin(t), 0.8)));
+
+  // Update the target position of the CoM
+  comTask->com(Eigen::Vector3d(0.0, 0.0, 0.8));
 
   return mc_control::MCController::run();
 }

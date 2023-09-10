@@ -2,6 +2,7 @@
 
 #include <mc_control/mc_controller.h>
 #include <mc_tasks/TransformTask.h>
+#include <mc_tasks/CoMTask.h>
 
 
 #include "api.h"
@@ -23,4 +24,7 @@ protected:
 
   //! Foot tasks
   std::array<std::shared_ptr<mc_tasks::TransformTask>, 2> footTasks;
+
+  //! CoM task
+  std::shared_ptr<mc_tasks::CoMTask> comTask;
 };
