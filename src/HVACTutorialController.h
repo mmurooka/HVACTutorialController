@@ -3,6 +3,7 @@
 #include <mc_control/mc_controller.h>
 #include <mc_tasks/TransformTask.h>
 #include <mc_tasks/CoMTask.h>
+#include <mc_tasks/OrientationTask.h>
 
 
 #include "api.h"
@@ -27,4 +28,7 @@ protected:
 
   //! CoM task
   std::shared_ptr<mc_tasks::CoMTask> comTask;
+
+  //! Base task
+  std::shared_ptr<mc_tasks::OrientationTask> baseTask;
 };

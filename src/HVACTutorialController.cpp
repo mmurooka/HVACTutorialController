@@ -14,6 +14,9 @@ HVACTutorialController::HVACTutorialController(mc_rbdyn::RobotModulePtr rm, doub
   comTask = std::make_shared<mc_tasks::CoMTask>(robots(), 0, 1000.0, 500.0);
   comTask->dimWeight(Eigen::Vector3d(1.0, 1.0, 0.1));
 
+  // Construct base task
+  baseTask = std::make_shared<mc_tasks::OrientationTask>("WAIST_R_S", robots(), 0, 50.0, 30.0);
+
   solver().addConstraintSet(contactConstraint);
   solver().addConstraintSet(kinematicsConstraint);
   solver().addTask(postureTask);
@@ -21,6 +24,7 @@ HVACTutorialController::HVACTutorialController(mc_rbdyn::RobotModulePtr rm, doub
   solver().addTask(footTasks[0]);
   solver().addTask(footTasks[1]);
   solver().addTask(comTask);
+  solver().addTask(baseTask);
   solver().setContacts({{}});
 
   mc_rtc::log::success("HVACTutorialController init done ");
