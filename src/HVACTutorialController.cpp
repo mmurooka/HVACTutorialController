@@ -1,3 +1,5 @@
+#include <mc_rtc/gui/Button.h>
+
 #include "HVACTutorialController.h"
 
 HVACTutorialController::HVACTutorialController(mc_rbdyn::RobotModulePtr rm, double dt, const mc_rtc::Configuration & config)
@@ -28,6 +30,13 @@ HVACTutorialController::HVACTutorialController(mc_rbdyn::RobotModulePtr rm, doub
   solver().addTask(baseTask);
   solver().setContacts({{}});
 
+  // Add buttons to move the CoM
+  gui()->addElement(
+      {"HVACTutorialController"},
+      mc_rtc::gui::Button("Move CoM to the left", [this]() { comFlag = 1; }),
+      mc_rtc::gui::Button("Move CoM to the center", [this]() { comFlag = 0; }),
+      mc_rtc::gui::Button("Move CoM to the right", [this]() { comFlag = -1; }));
+
   mc_rtc::log::success("HVACTutorialController init done ");
 }
 
@@ -45,7 +54,7 @@ bool HVACTutorialController::run()
                        Eigen::Vector3d(0.4 + 0.2 * std::cos(t), 0.2 + 0.2 * std::sin(t), 0.8)));
 
   // Update the target position of the CoM
-  comTask->com(Eigen::Vector3d(0.0, 0.0, 0.8));
+  comTask->com(Eigen::Vector3d(0.0, static_cast<double>(comFlag) * 0.1, 0.8));
 
   return mc_control::MCController::run();
 }

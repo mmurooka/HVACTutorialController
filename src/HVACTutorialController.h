@@ -31,4 +31,7 @@ protected:
 
   //! Base task
   std::shared_ptr<mc_tasks::OrientationTask> baseTask;
+
+  //! CoM flag
+  int comFlag = 0;
 };
