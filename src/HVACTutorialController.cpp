@@ -37,6 +37,9 @@ HVACTutorialController::HVACTutorialController(mc_rbdyn::RobotModulePtr rm, doub
       mc_rtc::gui::Button("Move CoM to the center", [this]() { comFlag = 0; }),
       mc_rtc::gui::Button("Move CoM to the right", [this]() { comFlag = -1; }));
 
+  // Add the sample log entry
+  logger().addLogEntry("sampleEntry", this, [this]() { return std::sin(t) + std::cos(0.4 * t); });
+
   mc_rtc::log::success("HVACTutorialController init done ");
 }
 
