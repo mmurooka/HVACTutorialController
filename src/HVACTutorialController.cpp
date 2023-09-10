@@ -13,6 +13,12 @@ HVACTutorialController::HVACTutorialController(mc_rbdyn::RobotModulePtr rm, doub
 
 bool HVACTutorialController::run()
 {
+  // Update time
+  t += solver().dt();
+
+  // Update the target angle of the neck joint
+  postureTask->target({{"NECK_Y", {mc_rtc::constants::toRad(45) * std::sin(0.5 * t)}}});
+
   return mc_control::MCController::run();
 }
 

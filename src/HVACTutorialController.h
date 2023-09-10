@@ -12,4 +12,8 @@ struct HVACTutorialController_DLLAPI HVACTutorialController : public mc_control:
   bool run() override;
 
   void reset(const mc_control::ControllerResetData & reset_data) override;
+
+protected:
+  //! Current time [sec]
+  double t = 0.0;
 };
