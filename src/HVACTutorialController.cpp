@@ -19,6 +19,7 @@ HVACTutorialController::HVACTutorialController(mc_rbdyn::RobotModulePtr rm, doub
 
   solver().addConstraintSet(contactConstraint);
   solver().addConstraintSet(kinematicsConstraint);
+  solver().addConstraintSet(selfCollisionConstraint);
   solver().addTask(postureTask);
   solver().addTask(handTask);
   solver().addTask(footTasks[0]);
